@@ -1,0 +1,7 @@
+[core]
+	autocrlf = false
+[user]
+	email = gregory90@gmail.com
+	name = Grzegorz Graczyk
+[push]
+	default = upstream
