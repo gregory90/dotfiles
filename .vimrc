@@ -75,7 +75,7 @@ command W w !sudo tee % > /dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
-
+set nu
 " Turn on the WiLd menu
 set wildmenu
 
@@ -143,9 +143,20 @@ set t_Co=256
 let g:solarized_termcolors=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
-set background=dark
-colorscheme solarized
+map <leader>ccs :call ToggleBg()<CR>
+function! ToggleBg()
+    if &background == 'dark'
+        set bg=light
+         else
+set bg=dark
+endif
+colorscheme gruvbox
+endfunc
+"set background=dark
+colorscheme gruvbox 
 
+
+:imap ;; <Esc>
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -422,6 +433,16 @@ map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark
 map <leader>nf :NERDTreeFind<cr>
 
+let g:goldenview__enable_default_mapping = 0
+
+nmap <silent> <leader>ll <Plug>GoldenViewSplit
+nmap <silent> <leader>ar :ToggleGoldenViewAutoResize
+nmap <silent> <leader>r :GoldenViewResize
+nmap <silent> <leader>sm <Plug>GoldenViewSwitchMain
+nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
+nmap <silent> <C-p> :Unite file<cr>
+
+imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
