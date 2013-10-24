@@ -153,7 +153,7 @@ endif
 colorscheme gruvbox
 endfunc
 "set background=dark
-colorscheme gruvbox 
+colorscheme gruvbox
 
 
 :imap ;; <Esc>
