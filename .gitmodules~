@@ -9,22 +9,22 @@
 	url = https://github.com/mattn/emmet-vim.git
 [submodule "gruvbox"]
 	path = bundle/gruvbox
-	url = https://github.com/morhetz/gruvbox.git
+	url = git@github.com:morhetz/gruvbox.git
 [submodule "molokai"]
 	path = bundle/molokai
-	url = https://github.com/tomasr/molokai.git
+	url = git@github.com:tomasr/molokai.git
 [submodule "nerdtree"]
 	path = bundle/nerdtree
-	url = https://github.com/scrooloose/nerdtree.git
+	url = git@github.com:scrooloose/nerdtree.git
 [submodule "unite.vim"]
 	path = bundle/unite.vim
-	url = https://github.com/Shougo/unite.vim.git
+	url = git@github.com:Shougo/unite.vim.git
 [submodule "vim-airline"]
 	path = bundle/vim-airline
-	url = https://github.com:bling/vim-airline.git
+	url = git@github.com:bling/vim-airline.git
 [submodule "vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
+	url = git@github.com:altercation/vim-colors-solarized.git
 [submodule "vim-kolor"]
 	path = bundle/vim-kolor
 	url = https://github.com/zeis/vim-kolor.git

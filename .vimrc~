@@ -150,10 +150,8 @@ function! ToggleBg()
          else
 set bg=dark
 endif
-let g:gruvbox_italic=0
 colorscheme gruvbox
 endfunc
-let g:gruvbox_italic=0
 set background=dark
 colorscheme gruvbox
 
