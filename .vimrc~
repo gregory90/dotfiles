@@ -150,10 +150,8 @@ function! ToggleBg()
          else
 set bg=dark
 endif
-let g:gruvbox_italic=0
 colorscheme gruvbox
 endfunc
-let g:gruvbox_italic=0
 set background=dark
 colorscheme gruvbox
 
@@ -442,10 +440,7 @@ nmap <silent> <leader>ar :ToggleGoldenViewAutoResize
 nmap <silent> <leader>r :GoldenViewResize
 nmap <silent> <leader>sm <Plug>GoldenViewSwitchMain
 nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
-
-nmap <silent> <C-p> :Unite file_rec<cr>
-
-map <leader>wx <C-w><C-x>
+nmap <silent> <C-p> :Unite file<cr>
 
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
