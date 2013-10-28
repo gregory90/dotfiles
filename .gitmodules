@@ -28,3 +28,9 @@
 [submodule "vim-kolor"]
 	path = bundle/vim-kolor
 	url = https://github.com/zeis/vim-kolor.git
+[submodule "bundle/vim-multiple-cursors"]
+	path = bundle/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git
+[submodule "bundle/vim-sorround"]
+	path = bundle/vim-sorround
+	url = git://github.com/tpope/vim-surround.git

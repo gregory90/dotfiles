@@ -43,5 +43,7 @@ ZSH_THEME="blinks"
 plugins=(git symfony2 ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
-
 # Customize to your needs...
+source .rvm/scripts/rvm
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:~/.composer/vendor/bin/
