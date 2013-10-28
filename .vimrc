@@ -143,7 +143,7 @@ set term=xterm-256color
 "let g:solarized_termcolors=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
-map <leader>ccs :call ToggleBg()<CR>
+"map <leader>ccs :call ToggleBg()<CR>
 function! ToggleBg()
     if &background == 'dark'
         set bg=light
