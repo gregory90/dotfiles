@@ -158,7 +158,7 @@ set background=dark
 colorscheme gruvbox
 
 
-:imap ;; <Esc>
+:imap <M-;> <Esc>
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -292,12 +292,7 @@ nmap <C-k> mz:m-2<cr>`z
 vmap <C-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <C-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
 func! DeleteTrailingWS()
@@ -335,10 +330,10 @@ vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 " To go to the previous search results do:
 "   <leader>p
 "
-map <leader>cc :botright cope<cr>
-map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-map <leader>n :cn<cr>
-map <leader>p :cp<cr>
+" map <leader>cc :botright cope<cr>
+" map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
+" map <leader>n :cn<cr>
+" map <leader>p :cp<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -442,8 +437,6 @@ nmap <silent> <leader>ar :ToggleGoldenViewAutoResize
 nmap <silent> <leader>r :GoldenViewResize
 nmap <silent> <leader>sm <Plug>GoldenViewSwitchMain
 nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
-
-nmap <silent> <C-p> :Unite file_rec<cr>
 
 map <leader>wx <C-w><C-x>
 
