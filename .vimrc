@@ -442,7 +442,10 @@ nmap <silent> <leader>ar :ToggleGoldenViewAutoResize
 nmap <silent> <leader>r :GoldenViewResize
 nmap <silent> <leader>sm <Plug>GoldenViewSwitchMain
 nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
-nmap <silent> <C-p> :Unite file<cr>
+
+nmap <silent> <C-p> :Unite file_rec<cr>
+
+map <leader>wx <C-w><C-x>
 
 imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
