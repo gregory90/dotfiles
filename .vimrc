@@ -39,16 +39,54 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=~/dotfiles
-:silent call pathogen#infect('~/dotfiles/bundle')
+":silent call pathogen#infect('~/dotfiles/bundle')
+set nocompatible              " be iMproved
+filetype off                  " required!
 
+set rtp+=~/dotfiles/bundle/vundle/
+call vundle#rc('~/dotfiles/bundle')
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My bundles here:
+"
+" original repos on GitHub
+Bundle 'scrooloose/syntastic'
+"Bundle 'Valloric/YouCompleteMe'
+Bundle 'Shougo/vimproc'
+"Bundle 'm2mdas/phpcomplete-extended'
+"Bundle 'm2mdas/phpcomplete-extended-symfony'
+Bundle 'morhetz/gruvbox'
+Bundle 'bkad/CamelCaseMotion'
+Bundle 'Raimondi/delimitMate'
+Bundle 'mattn/emmet-vim'
+Bundle 'zhaocai/GoldenView.Vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'kien/ctrlp.vim'
+Bundle 'tomtom/tlib_vim'
+"Bundle 'marcweber/vim-addon-mw-utils'
+Bundle 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'bling/vim-airline'
+Bundle 'terryma/vim-multiple-cursors'
+Bundle 'garbas/vim-snipmate'
+Bundle 'honza/vim-snippets'
+Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/php_getset.vim'
 filetype plugin indent on
 
-
+autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
+let g:phpcomplete_index_composer_command="composer"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Sets how many lines of history VIM has to remember
 set history=700
+
+set mouse=a
 
 " Enable filetype plugins
 filetype plugin on
@@ -158,7 +196,7 @@ set background=dark
 colorscheme gruvbox
 
 
-:imap <M-;> <Esc>
+:imap <leader>f <Esc>
 " Set extra options when running in GUI mode
 if has("gui_running")
     set guioptions-=T
@@ -223,7 +261,7 @@ map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
-map <c-space> ?
+map <C-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -287,10 +325,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <C-j> mz:m+<cr>`z
-nmap <C-k> mz:m-2<cr>`z
-vmap <C-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <C-k> :m'<-2<cr>`>my`<mzgv`yo`z
+"nmap <C-j> mz:m+<cr>`z
+"nmap <C-k> mz:m-2<cr>`z
+"vmap <C-j> :m'>+<cr>`<my`>mzgv`yo`z
+"vmap <C-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
 
 
@@ -440,7 +478,21 @@ nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
 
 map <leader>wx <C-w><C-x>
 
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+map <S-W> <Plug>CamelCaseMotion_w
+map <S-B> <Plug>CamelCaseMotion_b
+map <S-E> <Plug>CamelCaseMotion_e
+"imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+
+nnoremap <silent><F2> :JSHint<CR>
+inoremap <silent><F2> <C-O>:JSHint<CR>
+vnoremap <silent><F2> :JSHint<CR>
+cnoremap <F2> JSHint
+
+:au FocusLost * silent! wa
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
