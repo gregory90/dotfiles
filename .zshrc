@@ -48,4 +48,4 @@ source $ZSH/oh-my-zsh.sh
 # source .rvm/scripts/rvm
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:~/.composer/vendor/bin/
-alias work='cd /media/gregory/Data/Stuff/Work/2014 && ls'
+alias work='cd /media/gregory/647670837670582E/Stuff/Work/2014 && ls'

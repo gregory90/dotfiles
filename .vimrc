@@ -496,3 +496,7 @@ cnoremap <F2> JSHint
 :au FocusLost * silent! wa
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+function! TrimWhiteSpace()
+    %s/\s\+$//e
+endfunction
+autocmd BufWritePre     *.php :call TrimWhiteSpace()
