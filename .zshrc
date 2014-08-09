@@ -48,4 +48,18 @@ source $ZSH/oh-my-zsh.sh
 # source .rvm/scripts/rvm
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:~/.composer/vendor/bin/
-alias work='cd /media/gregory/647670837670582E/Stuff/Work/2014 && ls'
+export ANDROID_HOME="$HOME/development/adt-bundle/sdk/tools"
+export JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64"
+export PATH=$PATH:/usr/lib/jvm/java-6-openjdk-amd64/bin
+export ANDROID_PLATFORM_TOOLS="$HOME/development/adt-bundle/sdk/platform-tools"
+export PATH="$ANDROID_HOME:$ANDROID_PLATFORM_TOOLS:$PATH"
+alias work='cd /home/gregory/work && ls'
+alias maestro='python -m maestro'
+alias d='sudo docker'
+export PATH=$PATH:/usr/local/go/bin
+set -o vi
+bindkey -M vicmd '/' history-incremental-search-backward
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"

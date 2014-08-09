@@ -54,10 +54,7 @@ Bundle 'gmarik/vundle'
 "
 " original repos on GitHub
 Bundle 'scrooloose/syntastic'
-"Bundle 'Valloric/YouCompleteMe'
 Bundle 'Shougo/vimproc'
-"Bundle 'm2mdas/phpcomplete-extended'
-"Bundle 'm2mdas/phpcomplete-extended-symfony'
 Bundle 'morhetz/gruvbox'
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'Raimondi/delimitMate'
@@ -65,21 +62,16 @@ Bundle 'mattn/emmet-vim'
 Bundle 'zhaocai/GoldenView.Vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'kien/ctrlp.vim'
 Bundle 'tomtom/tlib_vim'
-"Bundle 'marcweber/vim-addon-mw-utils'
 Bundle 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
-Bundle 'terryma/vim-multiple-cursors'
 Bundle 'garbas/vim-snipmate'
 Bundle 'honza/vim-snippets'
 Bundle 'tpope/vim-surround'
 Bundle 'vim-scripts/php_getset.vim'
 filetype plugin indent on
 
-autocmd  FileType  php setlocal omnifunc=phpcomplete_extended#CompletePHP
-let g:phpcomplete_index_composer_command="composer"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
