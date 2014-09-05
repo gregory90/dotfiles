@@ -55,9 +55,7 @@ export ANDROID_PLATFORM_TOOLS="$HOME/development/adt-bundle/sdk/platform-tools"
 export PATH="$ANDROID_HOME:$ANDROID_PLATFORM_TOOLS:$PATH"
 alias work='cd /home/gregory/work && ls'
 alias maestro='python -m maestro'
-alias d='sudo docker'
 export PATH=$PATH:/usr/local/go/bin
-set -o vi
 bindkey -M vicmd '/' history-incremental-search-backward
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
