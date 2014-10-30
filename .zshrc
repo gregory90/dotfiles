@@ -6,7 +6,7 @@ ZSH=$HOME/dotfiles/oh-my-zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 #ZSH_THEME="blinks"
-ZSH_THEME="agnoster"
+ZSH_THEME="avit"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -49,8 +49,8 @@ source $ZSH/oh-my-zsh.sh
 # PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:~/.composer/vendor/bin/
 export ANDROID_HOME="$HOME/development/adt-bundle/sdk/tools"
-export JAVA_HOME="/usr/lib/jvm/java-6-openjdk-amd64"
-export PATH=$PATH:/usr/lib/jvm/java-6-openjdk-amd64/bin
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
+export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/bin
 export ANDROID_PLATFORM_TOOLS="$HOME/development/adt-bundle/sdk/platform-tools"
 export PATH="$ANDROID_HOME:$ANDROID_PLATFORM_TOOLS:$PATH"
 alias work='cd /home/gregory/work && ls'

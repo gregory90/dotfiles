@@ -39,7 +39,6 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=~/dotfiles
-":silent call pathogen#infect('~/dotfiles/bundle')
 set nocompatible              " be iMproved
 filetype off                  " required!
 
@@ -53,12 +52,11 @@ Bundle 'gmarik/vundle'
 " My bundles here:
 "
 " original repos on GitHub
-Bundle 'scrooloose/syntastic'
+" Bundle 'scrooloose/syntastic'
 Bundle 'Shougo/vimproc'
 Bundle 'morhetz/gruvbox'
 Bundle 'bkad/CamelCaseMotion'
 Bundle 'Raimondi/delimitMate'
-Bundle 'mattn/emmet-vim'
 Bundle 'zhaocai/GoldenView.Vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
@@ -66,10 +64,7 @@ Bundle 'tomtom/tlib_vim'
 Bundle 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
-Bundle 'garbas/vim-snipmate'
-Bundle 'honza/vim-snippets'
 Bundle 'tpope/vim-surround'
-Bundle 'vim-scripts/php_getset.vim'
 filetype plugin indent on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -473,17 +468,7 @@ map <leader>wx <C-w><C-x>
 map <S-W> <Plug>CamelCaseMotion_w
 map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
-"imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-
-nnoremap <silent><F2> :JSHint<CR>
-inoremap <silent><F2> <C-O>:JSHint<CR>
-vnoremap <silent><F2> :JSHint<CR>
-cnoremap <F2> JSHint
 
 :au FocusLost * silent! wa
 autocmd vimenter * if !argc() | NERDTree | endif
@@ -492,3 +477,4 @@ function! TrimWhiteSpace()
     %s/\s\+$//e
 endfunction
 autocmd BufWritePre     *.php :call TrimWhiteSpace()
+autocmd FileType go autocmd BufWritePre <buffer> Fmt
