@@ -200,7 +200,7 @@ map <space> /
 map <C-space> ?
 
 " Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+map <silent> <leader><space> :noh<cr>
 
 " Smart way to move between windows
 if has('nvim')
@@ -245,10 +245,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-nmap <C-[> mz:m+<cr>`z
-nmap <C-]> mz:m-2<cr>`z
-vmap <C-[> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <C-]> :m'<-2<cr>`>my`<mzgv`yo`z
+"nmap <C-h> mz:m+<cr>`z
+"nmap <C-l> mz:m-2<cr>`z
+"vmap <C-h> :m'>+<cr>`<my`>mzgv`yo`z
+"vmap <C-l> :m'<-2<cr>`>my`<mzgv`yo`z
 
 
 
@@ -258,9 +258,6 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.coffee :call DeleteTrailingWS()
-autocmd BufWrite *.js :call DeleteTrailingWS()
 autocmd BufWrite *.php :call DeleteTrailingWS()
 
 
@@ -328,6 +325,7 @@ endfunction
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <cr> :call g:WorkaroundNERDTreeToggle()<CR>
+"nmap <silent> <cr> :NERDTreeToggle<cr>
 
 function! g:WorkaroundNERDTreeToggle()
   try | NERDTreeToggle | catch | silent! NERDTree | endtry
@@ -348,14 +346,30 @@ map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
 
 
-:au FocusLost * silent! wa
+":au FocusLost * silent! wa
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-function! TrimWhiteSpace()
-    %s/\s\+$//e
+
+function! GoFormat()
+  " Preparation: save last search, and cursor position.
+  let l:win_view = winsaveview()
+  let l:last_search = getreg('/')
+  Fmt
+  if v:shell_error
+    undo
+    " use internal formatting command
+  endif
+  " Clean up: restore previous search history, and cursor position
+  call winrestview(l:win_view)
+  call setreg('/', l:last_search)
 endfunction
-autocmd BufWritePre     *.php :call TrimWhiteSpace()
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
+augroup filetype_go
+  autocmd!
+  autocmd FileType go autocmd BufWritePre <buffer> :call GoFormat()
+augroup END
+
+
 
 "let g:indentLine_leadingSpaceEnabled = 1
 let g:indentLine_leadingSpaceChar = '·'
@@ -391,8 +405,6 @@ augroup filetype_javascript
   autocmd FileType javascript autocmd BufWritePre <buffer> :call JSFormat()
 augroup END
 
-" toggle gundo
-nnoremap <leader>u :GundoToggle<CR>
 
 let g:mta_filetypes = {
     \ 'html' : 1,
