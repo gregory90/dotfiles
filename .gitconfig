@@ -1,5 +1,6 @@
 [core]
 	autocrlf = false
+	editor = /usr/local/bin/nvim
 [user]
 	email = gregory90@gmail.com
 	name = Grzegorz Graczyk

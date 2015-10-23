@@ -1,43 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer:
-"       Amir Salihefendic
-"       http://amix.dk - amix@amix.dk
-"
-" Version:
-"       5.0 - 29/05/12 15:43:36
-"
-" Blog_post:
-"       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
-"
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-"
-" Raw_version:
-"       http://amix.dk/vim/vimrc.txt
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_host_prog='/usr/bin/python'
 set runtimepath+=~/dotfiles
 set nocompatible              " be iMproved
 filetype off                  " required!
@@ -52,20 +13,21 @@ Bundle 'gmarik/vundle'
 " My bundles here:
 "
 " original repos on GitHub
-" Bundle 'scrooloose/syntastic'
-Bundle 'Shougo/vimproc'
-Bundle 'morhetz/gruvbox'
-Bundle 'bkad/CamelCaseMotion'
-Bundle 'Raimondi/delimitMate'
-Bundle 'zhaocai/GoldenView.Vim'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'tomtom/tlib_vim'
-Bundle 'https://github.com/MarcWeber/vim-addon-mw-utils.git'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'bling/vim-airline'
-Bundle 'tpope/vim-surround'
-filetype plugin indent on
+Plugin 'morhetz/gruvbox'
+Plugin 'bkad/CamelCaseMotion'
+Plugin 'Raimondi/delimitMate'
+Plugin 'zhaocai/GoldenView.Vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'bling/vim-airline'
+Plugin 'rking/ag.vim'
+Plugin 'Yggdroot/indentLine'
+Plugin 'godlygeek/tabular'
+Plugin 'szw/vim-ctrlspace'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'vim-jp/vim-go-extra'
+Plugin 'Valloric/MatchTagAlways'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -73,6 +35,9 @@ filetype plugin indent on
 " Sets how many lines of history VIM has to remember
 set history=700
 
+set showtabline=0
+
+" Enable mouse
 set mouse=a
 
 " Enable filetype plugins
@@ -120,6 +85,7 @@ set cmdheight=2
 
 " A buffer becomes hidden when it is abandoned
 set hid
+set hidden
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -158,39 +124,20 @@ set tm=500
 set foldcolumn=1
 
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enable syntax highlighting
 syntax enable
-set term=xterm-256color
-"set t_Co=256
-"let g:solarized_termcolors=256
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
-"map <leader>ccs :call ToggleBg()<CR>
-function! ToggleBg()
-    if &background == 'dark'
-        set bg=light
-         else
-set bg=dark
-endif
-let g:gruvbox_italic=0
-colorscheme gruvbox
-endfunc
+
 let g:gruvbox_italic=0
 set background=dark
 colorscheme gruvbox
 
 
-:imap <leader>f <Esc>
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
+:imap jk <Esc>
+:xmap jk <Esc>
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -218,16 +165,18 @@ set expandtab
 set smarttab
 
 " 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
+set shiftwidth=2
+set tabstop=2
 
 " Linebreak on 500 characters
 set lbr
 set tw=500
 
 set ai "Auto indent
-set si "Smart indent
+"set si "Smart indent
 set wrap "Wrap lines
+
+set cursorline          " highlight current line"
 
 
 """"""""""""""""""""""""""""""
@@ -254,30 +203,14 @@ map <C-space> ?
 map <silent> <leader><cr> :noh<cr>
 
 " Smart way to move between windows
+if has('nvim')
+    nmap <BS> <C-W>h
+endif
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
 " Specify the behavior when switching between buffers
 try
@@ -312,10 +245,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-"nmap <C-j> mz:m+<cr>`z
-"nmap <C-k> mz:m-2<cr>`z
-"vmap <C-j> :m'>+<cr>`<my`>mzgv`yo`z
-"vmap <C-k> :m'<-2<cr>`>my`<mzgv`yo`z
+nmap <C-[> mz:m+<cr>`z
+nmap <C-]> mz:m-2<cr>`z
+vmap <C-[> :m'>+<cr>`<my`>mzgv`yo`z
+vmap <C-]> :m'<-2<cr>`>my`<mzgv`yo`z
 
 
 
@@ -327,51 +260,9 @@ func! DeleteTrailingWS()
 endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
+autocmd BufWrite *.js :call DeleteTrailingWS()
+autocmd BufWrite *.php :call DeleteTrailingWS()
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => vimgrep searching and cope displaying
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSelection('gv', '')<CR>
-
-" Open vimgrep and put the cursor in the right position
-map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-" Vimgreps in the current file
-map <leader><space> :vimgrep // <C-R>%<C-A><right><right><right><right><right><right><right><right><right>
-
-" When you press <leader>r you can search and replace the selected text
-vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
-
-" Do :help cope if you are unsure what cope is. It's super useful!
-"
-" When you search with vimgrep, display your results in cope by doing:
-"   <leader>cc
-"
-" To go to the next search result do:
-"   <leader>n
-"
-" To go to the previous search results do:
-"   <leader>p
-"
-" map <leader>cc :botright cope<cr>
-" map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
-" map <leader>n :cn<cr>
-" map <leader>p :cp<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -379,13 +270,6 @@ map <leader>s? z=
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Remove the Windows ^M - when the encodings gets messed up
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -419,14 +303,6 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
 
 
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    en
-    return ''
-endfunction
-
 " Don't close window, when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
@@ -451,19 +327,21 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark
-map <leader>nf :NERDTreeFind<cr>
-map <leader><C-n> :MultipleCursorsFind 
+nmap <silent> <cr> :call g:WorkaroundNERDTreeToggle()<CR>
+
+function! g:WorkaroundNERDTreeToggle()
+  try | NERDTreeToggle | catch | silent! NERDTree | endtry
+endfunction
+
+let g:NERDTreeWinSize = 40 
 let g:goldenview__enable_default_mapping = 0
+let NERDTreeQuitOnOpen = 1
 
 nmap <silent> <leader>ll <Plug>GoldenViewSplit
-nmap <silent> <leader>ar :ToggleGoldenViewAutoResize
-nmap <silent> <leader>r :GoldenViewResize
-nmap <silent> <leader>sm <Plug>GoldenViewSwitchMain
-nmap <silent> <leader>tm <Plug>GoldenViewSwitchToggle
+nmap <silent> <leader>r :EnableGoldenViewAutoResize<cr>:let &winwidth = 80<cr>
 
-map <leader>wx <C-w><C-x>
+map <leader>d :DisableGoldenViewAutoResize<cr><C-w>=
+map <leader>s <C-w><C-x>
 
 map <S-W> <Plug>CamelCaseMotion_w
 map <S-B> <Plug>CamelCaseMotion_b
@@ -478,3 +356,56 @@ function! TrimWhiteSpace()
 endfunction
 autocmd BufWritePre     *.php :call TrimWhiteSpace()
 autocmd FileType go autocmd BufWritePre <buffer> Fmt
+
+"let g:indentLine_leadingSpaceEnabled = 1
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_indentLevel = 20
+let g:indentLine_faster = 1
+let g:jsx_ext_required = 0
+
+set clipboard=unnamed
+nnoremap <leader>a :Ag
+
+
+" will run esformatter after pressing <leader> followed by the 'e' and 's' keys
+nnoremap <silent> <leader>e :call JSFormat()<cr>
+
+function! JSFormat()
+  " Preparation: save last search, and cursor position.
+  let l:win_view = winsaveview()
+  let l:last_search = getreg('/')
+  execute ':silent' . '%!esformatter'
+  if v:shell_error
+    undo
+    "echo "esformatter error, using builtin vim formatter"
+    " use internal formatting command
+  endif
+  " Clean up: restore previous search history, and cursor position
+  call winrestview(l:win_view)
+  call setreg('/', l:last_search)
+endfunction
+
+"autoformat js files on save
+augroup filetype_javascript
+  autocmd!
+  autocmd FileType javascript autocmd BufWritePre <buffer> :call JSFormat()
+augroup END
+
+" toggle gundo
+nnoremap <leader>u :GundoToggle<CR>
+
+let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'javascript' : 1,
+    \}
+
+autocmd VimEnter * let &winwidth = 80
+
+if executable("ag")
+    let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+endif
+nnoremap <silent><C-p> :CtrlSpace O<CR>
+let g:deoplete#enable_at_startup = 1

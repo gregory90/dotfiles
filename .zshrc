@@ -41,23 +41,19 @@ ZSH_THEME="avit"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git symfony2 ssh-agent)
+plugins=(git ssh-agent)
 
 source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
-# source .rvm/scripts/rvm
-# PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-PATH=$PATH:~/.composer/vendor/bin/
-export ANDROID_HOME="$HOME/development/adt-bundle/sdk/tools"
-export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
-export PATH=$PATH:/usr/lib/jvm/java-7-openjdk-amd64/bin
-export ANDROID_PLATFORM_TOOLS="$HOME/development/adt-bundle/sdk/platform-tools"
-export PATH="$ANDROID_HOME:$ANDROID_PLATFORM_TOOLS:$PATH"
-alias work='cd /home/gregory/work && ls'
-alias maestro='python -m maestro'
-export PATH=$PATH:/usr/local/go/bin
+#
+eval "$(docker-machine env default)"
+export PATH=$PATH:./bin
+export PATH=$PATH:/usr/local/opt/go/libexec/bin
+export PATH=$PATH:./node_modules/.bin
+export DATA_DIR=/Users/gregory/data
 bindkey -M vicmd '/' history-incremental-search-backward
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+# cluster settings
+export FLEETCTL_TUNNEL=core-1.pqc.ovh
+alias vim=nvim
