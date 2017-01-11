@@ -49,16 +49,21 @@ source $ZSH/oh-my-zsh.sh
 export PATH=$PATH:./bin
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:./node_modules/.bin
-export PATH=$PATH:/Users/gregory90/go/bin
-export DATA_DIR=/Users/gregory90/data
+export PATH="$HOME/.yarn/bin:$PATH"
+export PATH=$PATH:~/go/bin
+export DATA_DIR=~/data
+
 export GOPATH=/Users/gregory90/go
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 bindkey -M vicmd '/' history-incremental-search-backward
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
 
-# cluster settings
+
+# aliases
 alias vim=nvim
 
+# enable different cursor shape in neovim
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 # The next line updates PATH for the Google Cloud SDK.
 source '/Users/gregory90/google-cloud-sdk/path.zsh.inc'
@@ -66,4 +71,3 @@ source '/Users/gregory90/google-cloud-sdk/path.zsh.inc'
 # The next line enables shell command completion for gcloud.
 source '/Users/gregory90/google-cloud-sdk/completion.zsh.inc'
 
-export PATH="$HOME/.yarn/bin:$PATH"

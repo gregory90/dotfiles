@@ -1,5 +1,3 @@
-let g:python_host_prog='/usr/bin/python'
-set nocompatible              " be iMproved
 filetype off                  " required!
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -8,23 +6,31 @@ call plug#begin('~/.local/share/nvim/plugged')
 "
 " original repos on GitHub
 Plug 'morhetz/gruvbox'
+Plug 'bling/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'gorodinskiy/vim-coloresque'
+
+Plug 'zhaocai/GoldenView.Vim'
+
 Plug 'bkad/CamelCaseMotion'
 Plug 'Raimondi/delimitMate'
-Plug 'zhaocai/GoldenView.Vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'bling/vim-airline'
-Plug 'rking/ag.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'godlygeek/tabular'
-Plug 'szw/vim-ctrlspace'
-Plug 'Shougo/deoplete.nvim'
-Plug 'vim-jp/vim-go-extra'
 Plug 'Valloric/MatchTagAlways'
+
+Plug 'rking/ag.vim'
+
+Plug 'Shougo/deoplete.nvim'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+
+Plug 'sbdchd/neoformat'
+
+Plug 'neomake/neomake'
+
 Plug 'wavded/vim-stylus'
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-syntastic/syntastic'
 
 " Initialize plugin system
 call plug#end()
@@ -137,6 +143,8 @@ set background=dark
 colorscheme gruvbox
 
 
+
+
 :imap jj <Esc>
 
 " Set utf8 as standard encoding and en_US as the standard language
@@ -245,23 +253,11 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 map 0 ^
 
 " Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
-"nmap <C-h> mz:m+<cr>`z
-"nmap <C-l> mz:m-2<cr>`z
-"vmap <C-h> :m'>+<cr>`<my`>mzgv`yo`z
-"vmap <C-l> :m'<-2<cr>`>my`<mzgv`yo`z
+"nmap <M-j> mz:m+<cr>`z
+"nmap <M-k> mz:m-2<cr>`z
+"vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
+"vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-
-
-" Delete trailing white space on save, useful for Python and CoffeeScript ;)
-"func! DeleteTrailingWS()
-  "exe "normal mz"
-  "%s/\s\+$//ge
-  "exe "normal `z"
-"endfunc
-"autocmd BufWrite *.php :call DeleteTrailingWS()
-"autocmd BufWrite *.go :call DeleteTrailingWS()
-"autocmd BufWrite *.js :call DeleteTrailingWS()
-"autocmd BufWrite *.jsx :call DeleteTrailingWS()
 
 
 
@@ -328,8 +324,6 @@ endfunction
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <cr> :call g:WorkaroundNERDTreeToggle()<CR>
-"nmap <silent> <cr> :NERDTreeToggle<cr>
-
 
 function! g:WorkaroundNERDTreeToggle()
   try | NERDTreeToggle | catch | silent! NERDTreeToggle | endtry
@@ -339,10 +333,9 @@ let g:NERDTreeWinSize = 40
 let g:goldenview__enable_default_mapping = 0
 let NERDTreeQuitOnOpen = 1
 
-"nmap <silent> <leader>ll <Plug>GoldenViewSplit
-"nmap <silent> <leader>r :EnableGoldenViewAutoResize<cr>:let &winwidth = 80<cr>
+nmap <silent> <leader>r :EnableGoldenViewAutoResize<cr>:let &winwidth = 80<cr>
 
-"map <leader>d :DisableGoldenViewAutoResize<cr><C-w>=
+map <leader>d :DisableGoldenViewAutoResize<cr><C-w>=
 map <leader>s <C-w><C-x>
 
 map <S-W> <Plug>CamelCaseMotion_w
@@ -350,83 +343,20 @@ map <S-B> <Plug>CamelCaseMotion_b
 map <S-E> <Plug>CamelCaseMotion_e
 
 
-":au FocusLost * silent! wa
-
 autocmd vimenter * if !argc() | %bd | endif
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
-function! GoFormat()
-  " Preparation: save last search, and cursor position.
-  let l:win_view = winsaveview()
-  let l:last_search = getreg('/')
-  Fmt
-  if v:shell_error
-    undo
-    " use internal formatting command
-  endif
-  " Clean up: restore previous search history, and cursor position
-  call winrestview(l:win_view)
-  call setreg('/', l:last_search)
-endfunction
-
-augroup filetype_go
-  autocmd!
-  autocmd FileType go autocmd BufWritePre <buffer> :call GoFormat()
-augroup END
-
-
-
-"let g:indentLine_leadingSpaceEnabled = 1
-let g:indentLine_leadingSpaceChar = '·'
-let g:indentLine_indentLevel = 20
-let g:indentLine_faster = 1
-let g:jsx_ext_required = 0
+autocmd VimEnter * let &winwidth = 80
 
 set clipboard=unnamed
 nnoremap <leader>a :Ag 
 nnoremap <leader>dd "_dd
 
 
-" will run esformatter after pressing <leader> followed by the 'e' and 's' keys
-nnoremap <silent> <leader>e :call JSFormat()<cr>
-
-function! JSFormat()
-  " Preparation: save last search, and cursor position.
-  let l:win_view = winsaveview()
-  let l:last_search = getreg('/')
-  execute ':silent' . '%!esformatter'
-  if v:shell_error
-    undo
-    "echo "esformatter error, using builtin vim formatter"
-    " use internal formatting command
-  endif
-  " Clean up: restore previous search history, and cursor position
-  call winrestview(l:win_view)
-  call setreg('/', l:last_search)
-endfunction
-
-"autoformat js files on save
-augroup filetype_javascript
-  autocmd!
-  autocmd FileType javascript autocmd BufWritePre <buffer> :call JSFormat()
-augroup END
-
-
-let g:mta_filetypes = {
-    \ 'html' : 1,
-    \ 'xhtml' : 1,
-    \ 'xml' : 1,
-    \ 'jinja' : 1,
-    \ 'javascript' : 1,
-    \}
-
-autocmd VimEnter * let &winwidth = 80
-
 if executable("ag")
     let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
 endif
-nnoremap <silent><C-p> :CtrlSpace O<CR>
+
 let g:deoplete#enable_at_startup = 1
 
 nnoremap <leader>q :q<cr>
@@ -438,23 +368,11 @@ if $TERM_PROGRAM =~ "iTerm"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
 endif
 
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_loc_list_height = 5
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
-"let g:syntastic_javascript_checkers = ['eslint']
+let g:neoformat_enabled_javascript = ['prettier']
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * Neoformat
+augroup END
 
-"let g:syntastic_error_symbol = '❌'
-"let g:syntastic_style_error_symbol = '⁉️'
-"let g:syntastic_warning_symbol = '⚠️'
-"let g:syntastic_style_warning_symbol = '💩'
-
-"highlight link SyntasticErrorSign SignColumn
-"highlight link SyntasticWarningSign SignColumn
-"highlight link SyntasticStyleErrorSign SignColumn
-"highlight link SyntasticStyleWarningSign SignColumn
+autocmd! BufWritePost * Neomake
