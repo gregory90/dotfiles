@@ -1,11 +1,10 @@
 # Path to your oh-my-zsh configuration.
-ZSH=$HOME/dotfiles/oh-my-zsh
+ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="blinks"
 ZSH_THEME="avit"
 
 # Example aliases
@@ -46,14 +45,25 @@ plugins=(git ssh-agent)
 source $ZSH/oh-my-zsh.sh
 # Customize to your needs...
 #
-eval "$(docker-machine env default)"
+#eval "$(docker-machine env default)"
 export PATH=$PATH:./bin
 export PATH=$PATH:/usr/local/opt/go/libexec/bin
 export PATH=$PATH:./node_modules/.bin
-export DATA_DIR=/Users/gregory/data
+export PATH=$PATH:/Users/gregory90/go/bin
+export DATA_DIR=/Users/gregory90/data
+export GOPATH=/Users/gregory90/go
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 bindkey -M vicmd '/' history-incremental-search-backward
 [[ -s "$HOME/.profile" ]] && source "$HOME/.profile"
 
 # cluster settings
-export FLEETCTL_TUNNEL=core-1.pqc.ovh
 alias vim=nvim
+
+
+# The next line updates PATH for the Google Cloud SDK.
+source '/Users/gregory90/google-cloud-sdk/path.zsh.inc'
+
+# The next line enables shell command completion for gcloud.
+source '/Users/gregory90/google-cloud-sdk/completion.zsh.inc'
+
+export PATH="$HOME/.yarn/bin:$PATH"

@@ -1,33 +1,33 @@
 let g:python_host_prog='/usr/bin/python'
-set runtimepath+=~/dotfiles
 set nocompatible              " be iMproved
 filetype off                  " required!
 
-set rtp+=~/dotfiles/bundle/vundle/
-call vundle#rc('~/dotfiles/bundle')
-
-" let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
+call plug#begin('~/.local/share/nvim/plugged')
 
 " My bundles here:
 "
 " original repos on GitHub
-Plugin 'morhetz/gruvbox'
-Plugin 'bkad/CamelCaseMotion'
-Plugin 'Raimondi/delimitMate'
-Plugin 'zhaocai/GoldenView.Vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'bling/vim-airline'
-Plugin 'rking/ag.vim'
-Plugin 'Yggdroot/indentLine'
-Plugin 'godlygeek/tabular'
-Plugin 'szw/vim-ctrlspace'
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'vim-jp/vim-go-extra'
-Plugin 'Valloric/MatchTagAlways'
+Plug 'morhetz/gruvbox'
+Plug 'bkad/CamelCaseMotion'
+Plug 'Raimondi/delimitMate'
+Plug 'zhaocai/GoldenView.Vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'bling/vim-airline'
+Plug 'rking/ag.vim'
+Plug 'Yggdroot/indentLine'
+Plug 'godlygeek/tabular'
+Plug 'szw/vim-ctrlspace'
+Plug 'Shougo/deoplete.nvim'
+Plug 'vim-jp/vim-go-extra'
+Plug 'Valloric/MatchTagAlways'
+Plug 'wavded/vim-stylus'
+Plug 'airblade/vim-gitgutter'
+Plug 'vim-syntastic/syntastic'
+
+" Initialize plugin system
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -132,12 +132,12 @@ set foldcolumn=1
 syntax enable
 
 let g:gruvbox_italic=0
+let g:gruvbox_contrast_dark="soft"
 set background=dark
 colorscheme gruvbox
 
 
-:imap jk <Esc>
-:xmap jk <Esc>
+:imap jj <Esc>
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
@@ -253,12 +253,15 @@ map 0 ^
 
 
 " Delete trailing white space on save, useful for Python and CoffeeScript ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-autocmd BufWrite *.php :call DeleteTrailingWS()
+"func! DeleteTrailingWS()
+  "exe "normal mz"
+  "%s/\s\+$//ge
+  "exe "normal `z"
+"endfunc
+"autocmd BufWrite *.php :call DeleteTrailingWS()
+"autocmd BufWrite *.go :call DeleteTrailingWS()
+"autocmd BufWrite *.js :call DeleteTrailingWS()
+"autocmd BufWrite *.jsx :call DeleteTrailingWS()
 
 
 
@@ -327,18 +330,19 @@ endfunction
 nmap <silent> <cr> :call g:WorkaroundNERDTreeToggle()<CR>
 "nmap <silent> <cr> :NERDTreeToggle<cr>
 
+
 function! g:WorkaroundNERDTreeToggle()
-  try | NERDTreeToggle | catch | silent! NERDTree | endtry
+  try | NERDTreeToggle | catch | silent! NERDTreeToggle | endtry
 endfunction
 
 let g:NERDTreeWinSize = 40 
 let g:goldenview__enable_default_mapping = 0
 let NERDTreeQuitOnOpen = 1
 
-nmap <silent> <leader>ll <Plug>GoldenViewSplit
-nmap <silent> <leader>r :EnableGoldenViewAutoResize<cr>:let &winwidth = 80<cr>
+"nmap <silent> <leader>ll <Plug>GoldenViewSplit
+"nmap <silent> <leader>r :EnableGoldenViewAutoResize<cr>:let &winwidth = 80<cr>
 
-map <leader>d :DisableGoldenViewAutoResize<cr><C-w>=
+"map <leader>d :DisableGoldenViewAutoResize<cr><C-w>=
 map <leader>s <C-w><C-x>
 
 map <S-W> <Plug>CamelCaseMotion_w
@@ -347,6 +351,8 @@ map <S-E> <Plug>CamelCaseMotion_e
 
 
 ":au FocusLost * silent! wa
+
+autocmd vimenter * if !argc() | %bd | endif
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
@@ -378,7 +384,8 @@ let g:indentLine_faster = 1
 let g:jsx_ext_required = 0
 
 set clipboard=unnamed
-nnoremap <leader>a :Ag
+nnoremap <leader>a :Ag 
+nnoremap <leader>dd "_dd
 
 
 " will run esformatter after pressing <leader> followed by the 'e' and 's' keys
@@ -421,3 +428,33 @@ if executable("ag")
 endif
 nnoremap <silent><C-p> :CtrlSpace O<CR>
 let g:deoplete#enable_at_startup = 1
+
+nnoremap <leader>q :q<cr>
+
+set synmaxcol=250
+
+if $TERM_PROGRAM =~ "iTerm"
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+endif
+
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_loc_list_height = 5
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 1
+"let g:syntastic_javascript_checkers = ['eslint']
+
+"let g:syntastic_error_symbol = '❌'
+"let g:syntastic_style_error_symbol = '⁉️'
+"let g:syntastic_warning_symbol = '⚠️'
+"let g:syntastic_style_warning_symbol = '💩'
+
+"highlight link SyntasticErrorSign SignColumn
+"highlight link SyntasticWarningSign SignColumn
+"highlight link SyntasticStyleErrorSign SignColumn
+"highlight link SyntasticStyleWarningSign SignColumn
