@@ -27,10 +27,11 @@ Plug 'zchee/deoplete-go', { 'do': 'make'}
 Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
 Plug 'sbdchd/neoformat'
-
 Plug 'neomake/neomake'
+Plug 'mbbill/undotree'
 
 Plug 'wavded/vim-stylus'
+Plug 'mxw/vim-jsx'
 
 " Initialize plugin system
 call plug#end()
@@ -38,6 +39,10 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Persistent undo
+set undodir=~/.config/nvim/undodir
+set undofile
+
 " Sets how many lines of history VIM has to remember
 set history=700
 
@@ -363,6 +368,7 @@ nnoremap <leader>q :q<cr>
 
 set synmaxcol=250
 
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 if $TERM_PROGRAM =~ "iTerm"
     let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
@@ -375,4 +381,13 @@ augroup fmt
   autocmd BufWritePre * Neoformat
 augroup END
 
+" neomake
+nmap <Leader><Space>o :lopen<CR>
+nmap <Leader><Space>c :lclose<CR>
+nmap <Leader><Space>, :ll<CR>
+nmap <Leader><Space>n :lnext<CR>
+nmap <Leader><Space>p :lprev<CR>
+
 autocmd! BufWritePost * Neomake
+
+let g:jsx_ext_required = 0
