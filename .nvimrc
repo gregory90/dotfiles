@@ -21,6 +21,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'Valloric/MatchTagAlways'
 
 Plug 'rking/ag.vim'
+Plug 'brooth/far.vim'
 
 Plug 'Shougo/deoplete.nvim'
 Plug 'zchee/deoplete-go', { 'do': 'make'}
@@ -375,7 +376,9 @@ if $TERM_PROGRAM =~ "iTerm"
 endif
 
 
+"let g:neoformat_enabled_css = ['stylefmt']
 let g:neoformat_enabled_javascript = ['prettier']
+let g:neoformat_enabled_xml = []
 augroup fmt
   autocmd!
   autocmd BufWritePre * Neoformat
@@ -391,3 +394,12 @@ nmap <Leader><Space>p :lprev<CR>
 autocmd! BufWritePost * Neomake
 
 let g:jsx_ext_required = 0
+let g:tern#arguments = ["--no-port-file"]
+
+" disable preview windows
+set completeopt-=preview
+
+
+:autocmd BufEnter *.png,*.jpg,*gif exec "! ~/.iterm2/imgcat ".expand("%") | :bw
+
+xnoremap p "_dP

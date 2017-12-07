@@ -1,6 +1,7 @@
 [core]
 	autocrlf = false
 	editor = /usr/local/bin/nvim
+	excludesfile = ~/.gitignore
 [user]
 	email = gregory90@gmail.com
 	name = Grzegorz Graczyk
